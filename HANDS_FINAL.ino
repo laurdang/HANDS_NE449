@@ -7,12 +7,12 @@ Adafruit_VL53L0X lox1 = Adafruit_VL53L0X();
 Adafruit_VL53L0X lox2 = Adafruit_VL53L0X();
 
 // XSHUT control pins
-#define XSHUT1 5
+#define XSHUT1 4
 #define XSHUT2 2
 
 // Motor PWM pins
-#define MOTOR1_PIN 9
-#define MOTOR2_PIN 11
+#define MOTOR1_PIN 5
+#define MOTOR2_PIN 6
 
 // Distance variables
 int d1 = 0;
