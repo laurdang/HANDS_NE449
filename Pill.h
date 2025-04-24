@@ -7,13 +7,10 @@ class Pill {
   public:
     unsigned long ID;
     String IDlabel;
-    String name;
-    String type;
-    String dosage;
-    String instructions;
+    String filename;
 
     Pill();
-    Pill(unsigned long ID, String IDlabel, String name, String type, String dosage, String instructions);
+    Pill(unsigned long ID, String IDlabel, String filename);
     void printInfo();
 };
 
