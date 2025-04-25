@@ -11,6 +11,7 @@ Steps:
 Notes:
 - ```Pill.h```/```Pill.cpp``` only has a few of the RFIDs and will need to be updated later to play all of them
 - Use ```I2C_Check_SLAVE.ino``` and ```I2C_Check_MASTER.ino``` to check communication between both boards (the RFID versions were based on this code)
+- Ignore ```HANDS_FINAL.ino```
 
 ## General
 To download:
