@@ -8,6 +8,7 @@ class Pill {
     unsigned long ID;
     String IDlabel;
     String filename;
+    
 
     Pill();
     Pill(unsigned long ID, String IDlabel, String filename);
