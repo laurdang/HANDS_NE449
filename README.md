@@ -1,6 +1,6 @@
 ## 4/24 Update
 To do:
-1. Wire the Wave Shield and edit ```I2C_Check_SLAVE_RFID.ino``` to access and play files (use ```pill[index].filename```)
+1. Wire the Wave Shield speaker and edit ```I2C_Check_SLAVE_RFID.ino``` to access and play files (use ```pill[index].filename```)
 2. Check if distance mapping is correct in the Master code
 
 Steps:
