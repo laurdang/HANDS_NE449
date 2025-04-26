@@ -1,51 +1,91 @@
-
 #include <Wire.h>
+#include <WaveHC.h>
+#include <WaveUtil.h>
+#include "Pill.h"
 
-#define SLAVE_ADDRESS 12      // Make sure this matches your Mega code
-#define SD_CS 10              // Wave Shield's CS pin
-#define LED_PIN 13            // Optional: LED to confirm communication
+#define SLAVE_ADDRESS 12
+#define SD_CS 10
+
+SdReader card;
+FatVolume vol;
+FatReader root;
+FatReader file;
+WaveHC wave;
 
 void setup() {
   Serial.begin(9600);
 
-  // Disable Wave Shield (keep SD card inactive)
   pinMode(SD_CS, OUTPUT);
-  digitalWrite(SD_CS, HIGH);   // Deselect SD card, prevent SPI from interfering
+  digitalWrite(SD_CS, HIGH);
 
-  Wire.begin(SLAVE_ADDRESS);   // Initialize I2C as slave at address 12
-  Wire.onReceive(receiveEvent); // Attach receive event handler
+  Wire.begin(SLAVE_ADDRESS);
+  Wire.onReceive(receiveEvent);
 
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, LOW);   // Start with LED off
+  Serial.println("UNO Slave with Wave Shield.");
 
-  Serial.println("UNO Slave ready with Wave Shield attached.");
+  if (!card.init()) {
+    Serial.println("SD card init failed!");
+    return;
+  }
+  if (!vol.init(card)) {
+    Serial.println("Volume init failed!");
+    return;
+  }
+  if (!root.openRoot(vol)) {
+    Serial.println("Opening root failed!");
+    return;
+  }
 }
 
 void loop() {
-  // Nothing needed here; waiting for I2C receive interrupts
+  // Nothing to do here
 }
 
 void receiveEvent(int howMany) {
-  if (howMany != 4) {              // Expect exactly 4 bytes for tag ID
+  if (howMany != 4) {
     Serial.println("Incorrect byte count received.");
     return;
   }
 
-  unsigned long receivedTagID = 0;               // Reset tagID before reassembling
-
+  unsigned long receivedTagID = 0;
   while (Wire.available()) {
-    receivedTagID = (receivedTagID << 8) | Wire.read();  // Reassemble MSB first
+    receivedTagID = (receivedTagID << 8) | Wire.read();
   }
 
   Serial.print("Received Tag ID: ");
-  Serial.println(receivedTagID);
+  Serial.println(receivedTagID, HEX);
 
-// ==== TO DO: PLAY FILE (comment out this section to test if it is reading the RFID) ======
-  for (int ii = 0; ii < 4; ii++)){ // searching through array of pills
-    if (pills[ii].ID == receivedTagID){ // if the ID of pill matches RFID
-      // play pills[ii].filename
+  for (int i = 0; i < 2; i++) { // Adjusted to match pill array size
+    if (pills[i].ID == receivedTagID) {
+      pills[i].printInfo();
+      playFile(pills[i].filename);  // Pass String directly
+      break;
     }
   }
 }
 
+void playFile(const String &name) {
+  if (wave.isplaying) wave.stop();
 
+  char filename[name.length() + 1]; // Create a buffer to hold the filename
+  name.toCharArray(filename, sizeof(filename)); // Copy the String to the char array
+
+  if (!file.open(root, filename)) {  // Now pass a mutable char array
+    Serial.print("Couldn't open file: ");
+    Serial.println(filename);
+    return;
+  }
+
+  if (!wave.create(file)) {
+    Serial.println("Not a valid WAV file");
+    return;
+  }
+
+  Serial.print("Playing: ");
+  Serial.println(filename);
+  wave.play();
+
+  while (wave.isplaying) {
+    // Wait while playing
+  }
+}
