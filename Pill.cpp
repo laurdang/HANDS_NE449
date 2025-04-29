@@ -16,12 +16,14 @@ void Pill::printInfo() {
   Serial.println();
   Serial.println("Pill Info:");
   Serial.print("ID (label): "); Serial.println(IDlabel);
-  Serial.print("Filename: "); Serial.println(filename);
+  Serial.print("Name: "); Serial.println(filename);
 }
 
-Pill pills[2] = {
-  Pill(0xCADC9A3F, "CADC9A3F", "Cayenne.wav"),
+Pill pills[] = {
+  Pill(0xCADC9A3F, "CADC9A3F", "Cayenne_Pepper.wav"),
   Pill(0xDADC9A3F, "DADC9A3F", "Oxycodon.wav"),
-  Pill(0xBADC9A3F, "BADC9A3F", "Atorvastatin.wav"),
-  Pill(0xAADC9A3F, "AADC9A3F", "Italian Seasoning.wav"),
+  Pill(0xAADC9A3F, "AADC9A3F", "Atorvastatin.wav"),
+  Pill(0x6ADC9A3F, "6ADC9A3F", "Xanax.wav"),
+  Pill(0x7ADC9A3F, "7ADC9A3F", "Viagra.wav"),
+  
 };
