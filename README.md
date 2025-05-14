@@ -17,10 +17,10 @@ We developed the Haptic Assisted Navigation Detection and Scanner (H.A.N.D.S.), 
 
 
 ## Software:
-| Board | File |
+| Board | File(s) |
 | ------------- | ------------- |
 | Arduino Mega 2560 Rev3  | ```HANDS_FINAL_MASTER.ino```  |
-| Arduino Uno Rev3/Adafruit Wave Shield™  v1.1 | ```HANDS_FINAL_SLAVE.ino```  |
+| Arduino Uno Rev3/Adafruit Wave Shield™  v1.1 | ```HANDS_FINAL_SLAVE.ino``` + ```Pill.h``` + ```Pill.cpp```|
 
 Download ```HANDS_FINAL_MASTER.ino``` and ```HANDS_FINAL_SLAVE.ino``` and place them in separate folders. Add ```Pill.h``` and ```Pill.cpp``` to the Slave folder. Plug both Arduinos to the same adaptor connected to the same computer, upload the Slave and Master file to the appropriate board/port. You should be able to see both boards communicating with the Serial Monitor in their respective windows.
 
